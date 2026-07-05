@@ -1,0 +1,18 @@
+{
+  "businessScenes": ["food_ordering", "coffee_ordering", "navigation"],
+  "appSceneMap": {
+    "com.sankuai.meituan": "food_ordering",
+    "com.yum.kfc": "food_ordering",
+    "com.luckin.client": "coffee_ordering"
+  },
+  "paymentApps": ["com.tencent.mm", "com.eg.android.AlipayGphone"],
+  "sceneFieldViews": {
+    "food_ordering": {
+      "evidenceFields": ["notifications10min"],
+      "stateFields": ["appUsage30min"],
+      "contextFields": ["snapshotTime", "publicTimePeriod"],
+      "lookBackMs": 600000,
+      "lookForwardMs": 120000
+    }
+  }
+}

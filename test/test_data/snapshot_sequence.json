@@ -1,0 +1,30 @@
+[
+  {
+    "snapshotTime": 1781661300000,
+    "features": {
+      "publicTimePeriod": "NOON",
+      "publicWorkDay": "PUBLIC_WORKDAY",
+      "commutePeriod": "GO_TO_WORK",
+      "poiToday": [],
+      "appUsage30min": [{"appName": "com.yum.kfc", "startTime": 1781661300000, "endTime": 1781661400000}],
+      "notifications10min": [],
+      "pasteBoard5min": [],
+      "latestCompanionMemoryInfo": [],
+      "latestScreenMemoryInfo": []
+    }
+  },
+  {
+    "snapshotTime": 1781661450000,
+    "features": {
+      "publicTimePeriod": "NOON",
+      "publicWorkDay": "PUBLIC_WORKDAY",
+      "commutePeriod": "GO_TO_WORK",
+      "poiToday": [],
+      "appUsage30min": [{"appName": "com.yum.kfc", "startTime": 1781661450000, "endTime": 1781661500000}],
+      "notifications10min": [],
+      "pasteBoard5min": [],
+      "latestCompanionMemoryInfo": [],
+      "latestScreenMemoryInfo": []
+    }
+  }
+]

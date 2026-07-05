@@ -1,0 +1,42 @@
+{
+  "snapshotTime": 1781661600000,
+  "features": {
+    "publicTimePeriod": "NOON",
+    "publicWorkDay": "PUBLIC_WORKDAY",
+    "commutePeriod": "GO_TO_WORK",
+    "poiToday": [
+      {
+        "poiType": "WORKPLACE",
+        "startTime": 1781661300000,
+        "endTime": 1781661360000
+      }
+    ],
+    "appUsage30min": [
+      {
+        "appName": "肯德基",
+        "startTime": 1781661480000,
+        "endTime": 1781661600000
+      }
+    ],
+    "notifications10min": [
+      {
+        "timestamp": 1781661500000,
+        "content": "肯德基优惠券即将过期",
+        "source": "com.kfc.app"
+      }
+    ],
+    "pasteBoard5min": [],
+    "companionSummary": {
+      "content": "用户在午休时段活跃"
+    },
+    "latestCompanionMemoryInfo": [],
+    "latestScreenMemoryInfo": [],
+    "userProfile": {
+      "character": {
+        "age": 30,
+        "name": "TestUser"
+      },
+      "user.md": "# User Notes"
+    }
+  }
+}
