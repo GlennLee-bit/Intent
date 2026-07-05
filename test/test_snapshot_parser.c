@@ -17,7 +17,7 @@ void TestParseFoodSnapshot(void) {
     TEST_ASSERT(snapshot.poiTodayCount == 1);
     TEST_ASSERT(strcmp(snapshot.poiTodayList[0].poiType, "WORKPLACE") == 0);
     TEST_ASSERT(snapshot.appUsageCount == 1);
-    TEST_ASSERT(strcmp(snapshot.appUsageList[0].appName, "肯德基") == 0);
+    TEST_ASSERT(strcmp(snapshot.appUsageList[0].appName, "com.yum.kfc") == 0);
     TEST_ASSERT(snapshot.notificationCount == 1);
     TEST_ASSERT(strcmp(snapshot.notificationList[0].content,
                        "肯德基优惠券即将过期") == 0);

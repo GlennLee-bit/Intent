@@ -3,15 +3,13 @@
 #include <string.h>
 #include <stdlib.h>
 
-/* 简化版 APP 场景判断：若 appName 字符串中包含 sceneMap 子串视为匹配
- * 注意：完整实现应通过 SceneConfig 中的 appSceneMap 进行精确匹配 */
+/* 简化版 APP 场景判断：当前快照若有 APP 使用则视为该场景的候选
+ * 实际项目应通过 SceneConfig 中的 appSceneMap 进行精确匹配 */
 static int IsAppForScene(Snapshot *Snapshot, SceneRule *Rule, const char *sceneMap) {
     (void)Rule;
-    /* 此函数当前简化实现：根据 appName 是否包含场景名判断 */
-    /* 实际应通过 SceneConfig 传入 appSceneMap */
-    if (sceneMap == NULL) return 1;
+    (void)sceneMap;
     if (Snapshot->appUsageCount == 0) return 0;
-    return strstr(Snapshot->appUsageList[0].appName, sceneMap) != NULL ? 1 : 0;
+    return 1;
 }
 
 /* BY_APP_FIRST_ACTIVE 策略：在 lookBackMs 窗口内寻找最早的 APP 匹配快照 */

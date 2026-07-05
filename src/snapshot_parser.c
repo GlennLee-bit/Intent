@@ -208,7 +208,7 @@ int SnapshotParseFromJson(const char *JsonString, Snapshot *Snapshot) {
         LOG_ERROR("Invalid params for SnapshotParseFromJson");
         return INTENT_FILTER_ERR_PARAM;
     }
-    memset(Snapshot, 0, sizeof(Snapshot));
+    memset(Snapshot, 0, sizeof(*Snapshot));
     cJSON *root = cJSON_Parse(JsonString);
     if (root == NULL) {
         LOG_ERROR("Failed to parse JSON root");

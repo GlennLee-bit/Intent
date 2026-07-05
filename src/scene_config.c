@@ -137,7 +137,7 @@ void SceneConfigDestroy(SceneConfig *Config) {
 /* 从 JSON 字符串加载 SceneConfig */
 int SceneConfigLoadFromJson(const char *JsonString, SceneConfig *Config) {
     if (JsonString == NULL || Config == NULL) return INTENT_FILTER_ERR_PARAM;
-    memset(Config, 0, sizeof(SceneConfig));
+    memset(Config, 0, sizeof(*Config));
     cJSON *root = cJSON_Parse(JsonString);
     if (root == NULL) {
         LOG_ERROR("Failed to parse scene config JSON");

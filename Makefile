@@ -20,20 +20,21 @@ LIB_OBJS := $(LIB_SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 # cJSON 源文件
 CJSON_OBJ := $(BUILD_DIR)/cJSON.o
 
-# 测试源文件
-TEST_SRCS := $(wildcard $(TEST_DIR)/test_*.c)
-TEST_OBJS := $(TEST_SRCS:$(TEST_DIR)/%.c=$(BUILD_DIR)/%.o)
+# 测试源文件 (排除 test_helpers.c，它只提供公共代码)
+TEST_SRCS := $(filter-out $(TEST_DIR)/test_helpers.c, $(wildcard $(TEST_DIR)/test_*.c))
+TEST_RUNNERS := $(TEST_SRCS:$(TEST_DIR)/%.c=$(BUILD_DIR)/%)
 
-TEST_RUNNER := $(BUILD_DIR)/test_runner
 TEST_HELPERS_SRC := $(TEST_DIR)/test_helpers.c
 
-.PHONY: all clean test
+.PHONY: all clean test test-all integration help
 
-all: $(LIB_PATH) $(TEST_RUNNER)
+# 默认目标: 构建库 + 所有测试 runner
+all: $(LIB_PATH) $(TEST_RUNNERS)
 
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
+# 业务 .o 编译规则
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -43,14 +44,33 @@ $(CJSON_OBJ): $(TP_DIR)/cJSON.c | $(BUILD_DIR)
 $(LIB_PATH): $(LIB_OBJS) $(CJSON_OBJ)
 	$(AR) $(ARFLAGS) $@ $^
 
+# 测试编译: 每个 test_X.c 编译为独立的 test_X runner
+# 模式: build/test_X 依赖于 build/test_X.o + 库 + test_helpers.o
+$(BUILD_DIR)/test_%: $(BUILD_DIR)/test_%.o $(LIB_PATH) $(BUILD_DIR)/test_helpers.o
+	$(CC) $(CFLAGS) -Itest $^ -o $@
+
+# 测试 .o 编译规则 (test_helpers 单独编译为可重用的 .o)
 $(BUILD_DIR)/%.o: $(TEST_DIR)/%.c | $(BUILD_DIR)
-	$(CC) $(CFLAGS -Itest) -c $< -o $@
+	$(CC) $(CFLAGS) -Itest -c $< -o $@
 
-$(TEST_RUNNER): $(TEST_OBJS) $(LIB_PATH) $(TEST_HELPERS_SRC)
-	$(CC) $(CFLAGS) -Itest $(TEST_OBJS) $(LIB_PATH) $(TEST_HELPERS_SRC) -o $@
+# 运行所有测试
+test test-all: $(TEST_RUNNERS)
+	@set -e; \
+	for runner in $(TEST_RUNNERS); do \
+		echo "=== Running $$runner ==="; \
+		$$runner || exit 1; \
+	done
 
-test: $(TEST_RUNNER)
-	./$(TEST_RUNNER)
+# 单独运行某个测试 (示例: make integration)
+integration: $(BUILD_DIR)/test_integration
+	./$(BUILD_DIR)/test_integration
 
 clean:
 	rm -rf $(BUILD_DIR)
+
+help:
+	@echo "Available targets:"
+	@echo "  all         - Build library + all test runners"
+	@echo "  test        - Build and run all tests"
+	@echo "  integration - Run integration test only"
+	@echo "  clean       - Remove build artifacts"
